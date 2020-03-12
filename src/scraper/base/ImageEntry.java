@@ -22,18 +22,17 @@ public class ImageEntry
 	 */
 	private String imgAddress;
 	
+	/**
+	 * Creates a new ImageEntry storing an image URL alongside the source page URL.
+	 * @param pageAdIn - the URL for the page where the image was found
+	 * @param imgAdIn - the full URL of the image itself
+	 */
 	public ImageEntry(String pageAdIn, String imgAdIn)
 	{
-		if (pageAdIn != null && pageAdIn != "")
-		{
-			this.pageAddress = pageAdIn;
-		}
 		
-		if (imgAdIn != null && imgAdIn != "")
-		{
-			this.imgAddress = imgAdIn;
-		}
-	}
+		this.pageAddress = pageAdIn;
+		this.imgAddress = imgAdIn;
+}
 	
 	/**
 	 * Retrieves the source page URL.
