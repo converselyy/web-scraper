@@ -24,6 +24,17 @@ public class WebScraper
 	private String url = "";
 	
 	/**
+	 * Builds a new WebScraper that should start at the provided URL and will by default explore that page 
+	 * at a depth of 0. This allows extracting just the details from this page and nothing else.
+	 * @param urlIn - The URL to begin exploring for images.
+	 */
+	public WebScraper(String urlIn)
+	{
+		this.url = urlIn;
+		this.depth = 0;
+	}
+	
+	/**
 	 * Builds a new WebScraper that should start at the
 	 * provided URL and will explore recursively to a
 	 * specified depth.
@@ -46,17 +57,6 @@ public class WebScraper
 	public void setDepth(int depthIn)
 	{
 		this.depth = (depthIn >= 0) ? depthIn : 0;
-	}
-	
-	/**
-	 * Builds a new WebScraper that should start at the provided URL and will by default explore that page 
-	 * at a depth of 0. This allows extracting just the details from this page and nothing else.
-	 * @param urlIn - The URL to begin exploring for images.
-	 */
-	public WebScraper(String urlIn)
-	{
-		this.url = urlIn;
-		this.depth = 0;
 	}
 	
 	/**
@@ -114,7 +114,18 @@ public class WebScraper
 	 */
 	public ResultSet crawlPage()
 	{
+		Document page = new Document();
+		page.loadPageFromURL(this.url);
+		ResultSet results = this.getImages();
+		Elements links = page.getElementsByTag("a");
 		
+		while (links.hasNextElement())
+		{
+			
+		}
+		
+		
+		return results;
 	}
 	
 	/**
@@ -134,7 +145,8 @@ public class WebScraper
 	 * This method will not explore any links found at the base page. Image information should be 
 	 * stored in the order in which their corresponding <img> tags appear in the source HTML code. 
 	 * If an image appears more than once in a page, only one entry should appear in the ResultSet.
-	 * @return
+	 * 
+	 * @return A collection of ImageEntry objects for the images foundat the base url location.
 	 */
 	public scraper.utils.ResultSet getImages()
 	{
