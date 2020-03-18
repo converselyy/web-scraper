@@ -22,7 +22,9 @@ public class WebScraper
 	 * String object representing the url to scrape.
 	 */
 	private String url = "";
-	
+	/**
+	 * Page history object.
+	 */
 	private PageHistory hist = new PageHistory();
 	
 	/**
@@ -53,7 +55,7 @@ public class WebScraper
 	}
 	
 	/**
-	 * Updates this WebScraper to explore to a newdepth.
+	 * Updates this WebScraper to explore to a new depth.
 	 * @param depthIn The recursive depth to explore, must be >= 0.
 	 * Negative values will be treated as equivalent to 0.
 	 */
@@ -120,11 +122,23 @@ public class WebScraper
 		Document page = new Document();
 		page.loadPageFromURL(this.url);
 		ResultSet results = this.getImages();
-		Elements links = page.getElementsByTag("a");
-		
-		while (links.hasNextElement())
+		if (this.depth != 0)
 		{
+			Elements links = page.getElementsByTag("a");
 			
+			while (links.hasNextElement())
+			{
+				WebScraper wp = new WebScraper(links.getNextElement().getAttributeValue("href"));
+				
+				ResultSet imgs = wp.crawlPage();
+				for (int i = 0; i < imgs.getNumEntries(); i++)
+				{
+					if (results.contains(imgs.getAllResults()[i].getImgLocation()))
+					{
+						results.addResult(imgs.getAllResults()[i]);
+					}
+				}
+			}
 		}
 		
 		return results;
@@ -148,7 +162,7 @@ public class WebScraper
 	 * stored in the order in which their corresponding <img> tags appear in the source HTML code. 
 	 * If an image appears more than once in a page, only one entry should appear in the ResultSet.
 	 * 
-	 * @return A collection of ImageEntry objects for the images foundat the base url location.
+	 * @return A collection of ImageEntry objects for the images found at the base url location.
 	 */
 	public scraper.utils.ResultSet getImages()
 	{
