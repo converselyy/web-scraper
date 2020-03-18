@@ -23,9 +23,12 @@ public class WebScraper
 	 */
 	private String url = "";
 	
+	private PageHistory hist = new PageHistory();
+	
 	/**
-	 * Builds a new WebScraper that should start at the provided URL and will by default explore that page 
-	 * at a depth of 0. This allows extracting just the details from this page and nothing else.
+	 * Builds a new WebScraper that should start at the provided URL
+	 * and will by default explore that page at a depth of 0. This allows extracting
+	 * just the details from this page and nothing else.
 	 * @param urlIn - The URL to begin exploring for images.
 	 */
 	public WebScraper(String urlIn)
@@ -124,7 +127,6 @@ public class WebScraper
 			
 		}
 		
-		
 		return results;
 	}
 	
@@ -137,7 +139,7 @@ public class WebScraper
 	 */
 	public PageHistory getPageHistory()
 	{
-		
+		return this.hist;
 	}
 		
 	/**
