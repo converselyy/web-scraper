@@ -136,7 +136,7 @@ public class WebScraper
 					if (results.contains(imgs.getAllResults()[i].getImgLocation()))
 					{
 						results.addResult(imgs.getAllResults()[i]);
-					}
+					} // somewhere in here needs to add each link to hist for the page history
 				}
 			}
 		}
